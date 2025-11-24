@@ -1,6 +1,8 @@
 # Learning Latent Transmission and Glare Maps for Lens Veiling Glare Removal [[arXiv]](https://arxiv.org/abs/2511.17353v1) [[Project Page]](https://xiaolongqian.github.io/DeVeiler-page/)
 
-## Authors
+[Xiaolong Qian](https://github.com/XiaolongQian/)*, [Qi Jiang](https://github.com/zju-jiangqi/)*, [Lei Sun](https://ahupujr.github.io/)†, [Zongxi Yu](https://github.com/ZongxiYu-ZJU/), [Kailun Yang](https://yangkailun.com/), [Peixuan Wu](https://xiaolongqian.github.io/DeVeiler-page/), [Jiacheng Zhou](https://xiaolongqian.github.io/DeVeiler-page/), [Yao Gao](https://github.com/LiGpy/), [Yaoguang Ma](https://scholar.google.com/citations?user=UnVrCQ0AAAAJ&amp;hl=zh-CN), [Ming-Hsuan Yang](https://faculty.ucmerced.edu/mhyang/), [Kaiwei Wang](http://wangkaiwei.org/)†
+
+<!-- ## Authors
 - Xiaolong Qian<sup>1,\*</sup>
 - Qi Jiang<sup>1,\*</sup>
 - Lei Sun<sup>2,†</sup>
@@ -18,7 +20,7 @@
 - <sup>2</sup>INSAIT, Sofia University “St. Kliment Ohridski”
 - <sup>3</sup>Hunan University
 - <sup>4</sup>University of California, Merced
-- <sup>5</sup>Google DeepMind
+- <sup>5</sup>Google DeepMind -->
 
 **Notes:** \* Equal contribution &nbsp;&nbsp; † Corresponding author
 
