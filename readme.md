@@ -1,6 +1,6 @@
 # Learning Latent Transmission and Glare Maps for Lens Veiling Glare Removal [[arXiv]](https://arxiv.org/abs/2511.17353v1) [[Project Page]](https://xiaolongqian.github.io/DeVeiler-page/)
 
-[Xiaolong Qian](https://github.com/XiaolongQian/)*, [Qi Jiang](https://github.com/zju-jiangqi/)*, [Lei Sun](https://ahupujr.github.io/)†, [Zongxi Yu](https://github.com/ZongxiYu-ZJU/), [Kailun Yang](https://yangkailun.com/), [Peixuan Wu](https://xiaolongqian.github.io/DeVeiler-page/), [Jiacheng Zhou](https://xiaolongqian.github.io/DeVeiler-page/), [Yao Gao](https://github.com/LiGpy/), [Yaoguang Ma](https://scholar.google.com/citations?user=UnVrCQ0AAAAJ&amp;hl=zh-CN), [Ming-Hsuan Yang](https://faculty.ucmerced.edu/mhyang/), [Kaiwei Wang](http://wangkaiwei.org/)†
+[Xiaolong Qian](https://github.com/XiaolongQian/)\*, [Qi Jiang](https://github.com/zju-jiangqi/)\*, [Lei Sun](https://ahupujr.github.io/)†, [Zongxi Yu](https://github.com/ZongxiYu-ZJU/), [Kailun Yang](https://yangkailun.com/), [Peixuan Wu](https://xiaolongqian.github.io/DeVeiler-page/), [Jiacheng Zhou](https://xiaolongqian.github.io/DeVeiler-page/), [Yao Gao](https://github.com/LiGpy/), [Yaoguang Ma](https://scholar.google.com/citations?user=UnVrCQ0AAAAJ&amp;hl=zh-CN), [Ming-Hsuan Yang](https://faculty.ucmerced.edu/mhyang/), [Kaiwei Wang](http://wangkaiwei.org/)†
 
 <!-- ## Authors
 - Xiaolong Qian<sup>1,\*</sup>
