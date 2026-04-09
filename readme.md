@@ -5,7 +5,7 @@
 This repository presents the implementation of the paper:
 
 > **Learning Latent Transmission and Glare Maps for Lens Veiling Glare Removal**<br>
-> [Xiaolong Qian](https://github.com/XiaolongQian/)\*<sup>1</sup>, [Qi Jiang](https://github.com/zju-jiangqi/)\*<sup>1</sup>, [Lei Sun](https://ahupujr.github.io/)<sup>2,†</sup>, [Zongxi Yu](https://github.com/ZongxiYu-ZJU/)<sup>1</sup>, [Kailun Yang](https://yangkailun.com/)<sup>3</sup>, [Peixuan Wu](https://xiaolongqian.github.io/DeVeiler-page/)<sup>1</sup>, [Jiacheng Zhou](https://xiaolongqian.github.io/DeVeiler-page/)<sup>1</sup>, [Yao Gao](https://github.com/LiGpy/)<sup>1</sup>, [Yaoguang Ma](https://scholar.google.com/citations?user=UnVrCQ0AAAAJ&hl=zh-CN)<sup>1</sup>, [Ming-Hsuan Yang](https://faculty.ucmerced.edu/mhyang/)<sup>4,5</sup>, [Kaiwei Wang](http://wangkaiwei.org/)<sup>1,†</sup><br>
+> [Xiaolong Qian](https://github.com/XiaolongQian/)\*<sup>1</sup>, [Qi Jiang](https://github.com/zju-jiangqi/)\*<sup>1</sup>, [Lei Sun](https://ahupujr.github.io/)<sup>2,†</sup>, [Zongxi Yu](https://github.com/ZongxiYu-ZJU/)<sup>1</sup>, [Kailun Yang](https://yangkailun.com/)<sup>3</sup>, [Peixuan Wu](https://xiaolongqian.github.io/DeVeiler-page/)<sup>1</sup>, [Jiacheng Zhou](https://xiaolongqian.github.io/DeVeiler-page/)<sup>1</sup>, [Yao Gao](https://github.com/LiGpy/)<sup>1</sup>, [Yaoguang Ma](https://scholar.google.com/citations?user=UnVrCQ0AAAAJ&hl=zh-CN)<sup>1</sup>, [Ming-Hsuan Yang](https://faculty.ucmerced.edu/mhyang/)<sup>4</sup>, [Kaiwei Wang](http://wangkaiwei.org/)<sup>1,†</sup><br>
 > The IEEE / CVF Computer Vision and Pattern Recognition Conference (CVPR), 2026
 
 **Affiliations**
@@ -13,7 +13,6 @@ This repository presents the implementation of the paper:
 - <sup>2</sup>INSAIT, Sofia University “St. Kliment Ohridski”
 - <sup>3</sup>Hunan University
 - <sup>4</sup>University of California, Merced
-- <sup>5</sup>Google DeepMind
 
 **Notes:** \* Equal contribution &nbsp;&nbsp; † Corresponding author
 
@@ -31,6 +30,7 @@ This repository presents the implementation of the paper:
 
 ## News
 - **2026-02**: DeVeiler is accepted to **CVPR 2026**.
+- **2026-04**: DeVeiler is selected as a **CVPR 2026 Highlight**.
 
 
 ## Code & Models
