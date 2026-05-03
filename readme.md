@@ -18,6 +18,13 @@ This repository presents the implementation of the paper:
 
 ![teaser](assets/teaser.png)
 
+## Key Highlights
+
+- **Physically-Informed Data Generation:** VeilGen synthesizes paired training data using latent transmission and glare maps for aberration and veiling glare modeling.  
+- **Reversible Restoration Network:** DeVeiler uses a physically-consistent, reversible network with degradation-consistency constraints to restore image structures and color.  
+- **Generalization Across Minimalist Optics:** Works on single-lens and metasurface–refractive hybrid systems, effectively removing glare while preserving details.  
+- **Domain Adaptation Potential:** The combination of physically-informed data and reversible restoration allows adaptation to diverse imaging conditions and visual tasks.
+
 ## Results
 
 - **Real-world compound domain (single-lens)**  
