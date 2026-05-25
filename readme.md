@@ -2,6 +2,7 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2511.17353-b31b1b.svg)](https://arxiv.org/abs/2511.17353v1)
 [![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://xiaolongqian.github.io/DeVeiler-page/)
+[![Dataset](https://img.shields.io/badge/HuggingFace-Dataset-yellow)](https://huggingface.co/datasets/Residual/VeilingGlareData)
 [![License](https://img.shields.io/badge/license-Apache--2.0-929292)](LICENSE)
 [![Code](https://img.shields.io/badge/code-released-brightgreen)](#code--models)
 
@@ -40,7 +41,7 @@ This repository presents the implementation of the paper:
 
 - **2026-02**: DeVeiler is accepted to **CVPR 2026**.
 - **2026-04**: DeVeiler is selected as a **CVPR 2026 Highlight**.
-- **2026-05**: The code for **VeilGen** and **DeVeiler** is released.
+- **2026-05**: The dataset and code for **VeilGen** and **DeVeiler** is released.
 
 ## Code & Models
 
