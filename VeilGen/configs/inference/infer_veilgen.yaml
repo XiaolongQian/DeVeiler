@@ -1,0 +1,108 @@
+# LOTGMP推理配置文件 - 基于实际训练配置
+model:
+  cldm:
+    target: train_veilgen.ControlLDMWithLOTGMPEnhanced
+    params:
+      latent_scale_factor: 0.18215
+      unet_cfg:
+        use_checkpoint: True
+        image_size: 32 # unused
+        in_channels: 4
+        out_channels: 4
+        model_channels: 320
+        attention_resolutions: [ 4, 2, 1 ]
+        num_res_blocks: 2
+        channel_mult: [ 1, 2, 4, 4 ]
+        num_head_channels: 64 # need to fix for flash-attn
+        use_spatial_transformer: True
+        use_linear_in_transformer: True
+        transformer_depth: 1
+        context_dim: 1024
+        legacy: False
+      vae_cfg:
+        embed_dim: 4
+        ddconfig:
+          double_z: true
+          z_channels: 4
+          resolution: 256
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult:
+          - 1
+          - 2
+          - 4
+          - 4
+          num_res_blocks: 2
+          attn_resolutions: []
+          dropout: 0.0
+      clip_cfg:
+        embed_dim: 1024
+        vision_cfg:
+          image_size: 224
+          layers: 32
+          width: 1280
+          head_width: 80
+          patch_size: 14
+        text_cfg:
+          context_length: 77
+          vocab_size: 49408
+          width: 1024
+          heads: 16
+          layers: 24
+        layer: "penultimate"
+      controlnet_cfg:
+        use_checkpoint: True
+        image_size: 32 # unused
+        in_channels: 4   # 原始噪声latent通道数 (x_noisy + modulated_x_noisy)
+        hint_channels: 4  # 条件图像latent通道数，总输入通道数 = 8 + 4 = 12
+        model_channels: 320
+        attention_resolutions: [ 4, 2, 1 ]
+        num_res_blocks: 2
+        channel_mult: [ 1, 2, 4, 4 ]
+        num_head_channels: 64 # need to fix for flash-attn
+        use_spatial_transformer: True
+        use_linear_in_transformer: True
+        transformer_depth: 1
+        context_dim: 1024
+        legacy: False
+
+  # LOTGMP配置
+  lotgmp:
+    target: models.lotgmp.create_lotgmp  # 
+    params:
+      latent_channels: 4
+      hidden_channels: 128
+      num_res_blocks: 4
+      use_attention: True
+      shift_scale: 3
+
+  diffusion:
+    target: diffbir.model.gaussian_diffusion.Diffusion
+    params:
+      linear_start: 0.00085
+      linear_end: 0.0120
+      timesteps: 1000
+
+inference:
+  # 基础配置 - 请根据实际情况修改路径
+  w: 0.85
+  sd_path: '/path/to/pretrained/v2-1_512-ema-pruned.ckpt'
+  controlnet_path: '/path/to/checkpoints/controlnet.pt'
+  lotgmp_path: '/path/to/checkpoints/lotgmp.pt'  # 可选
+  lotgmp_modulation_path: '/path/to/checkpoints/lotgmp_modulation.pt'  # 可选
+
+
+
+  # 输入输出路径 - 请根据实际情况修改
+  image_folder: '/path/to/input/clear/images'
+
+  result_folder: './outputs/infer_veilgen'
+  # 采样参数
+  steps: 10  # 对应时间步: [111, 222, 333, 444, 555, 666, 777, 888, 999]
+  
+  # LOTGMP调制参数
+  use_lotgmp: true  # 是否使用LOTGMP调制
+  lotgmp_scale_path: '/path/to/stacked/latent_maps/lotgmp_scale_tensors.npy'  # stacked scale npy path
+  lotgmp_shift_path: '/path/to/stacked/latent_maps/lotgmp_shift_tensors.npy'  # stacked scale npy path
+  lotgmp_use_average: false  # 是否使用平均结果，false为随机选择（推荐）

@@ -1,0 +1,120 @@
+# general settings
+name: 1_DeVeiler_Aberration_correction_training_stage
+model_type: ImageRestorationModel
+scale: 1
+num_gpu: 1
+manual_seed: 0
+
+# dataset and data loader settings
+datasets:
+  train:
+    name: src
+    type: PairedImageDataset
+    dataroot_gt: /path/to/src_gt
+    dataroot_lq: /path/to/src_lq
+
+
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
+
+    gt_size: 256
+    use_hflip: true
+    use_rot: true
+
+    # data loader
+    num_worker_per_gpu: 8
+    batch_size_per_gpu: 8
+    dataset_enlarge_ratio: 1
+    prefetch_mode: ~
+
+
+  val_1:
+    name: tgt
+    type: PairedImageDataset
+    dataroot_gt: /path/to/screen_tgt_gt_all
+    dataroot_lq: /path/to/screen_tgt_lq
+
+    io_backend:
+      type: disk
+
+network_g:
+  type: deveiler_wo_vgcm
+
+
+  in_channel: 3
+  gt_resolution: 256
+  norm_type: 'gn'
+  act_type: 'silu'
+  codebook_params:
+    - [32, 1024, 512]
+
+
+# path
+path:
+  pretrain_network_g: ~
+  strict_load: false 
+  # resume_state: ~
+
+
+# training settings
+train:
+  optim_g:
+    type: Adam
+    lr: !!float 2e-4
+    weight_decay: 0
+    betas: [0.9, 0.99]
+
+  scheduler:
+    type: TrueCosineAnnealingLR
+    T_max: 100000
+    eta_min: !!float 1e-7
+
+  total_iter: 100000
+  warmup_iter: -1  # no warm up
+
+  # losses
+  pixel_opt:
+    type: L1Loss
+    loss_weight: 1.0 
+    reduction: mean
+
+  perceptual_opt:
+    type: LPIPSLoss
+    loss_weight: !!float 1.0    
+
+
+# validation settings·
+val:
+  val_freq: !!float 2e4
+  save_img: true
+  # grids: true
+  # crop_size: 256
+  # max_minibatch: 8
+  pbar: true
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 10
+      test_y_channel: true
+
+    ssim: # metric name, can be arbitrary
+      type: calculate_ssim
+      crop_border: 10
+      test_y_channel: true
+
+    lpips: # metric name, can be arbitrary
+      type: calculate_lpips
+      crop_border: 10
+      test_y_channel: true
+
+
+
+# logging settings
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!float 2e4
+  use_tb_logger: true
+  wandb:
+    project: ~
+    resume_id: ~

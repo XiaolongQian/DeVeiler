@@ -1,0 +1,41 @@
+# Local agent/tool state
+.agents/
+.codex/
+
+# Cleanup and internal migration notes
+archive_unused/
+docs/
+
+# Training outputs
+experiments/
+results/
+tb_logger/
+wandb/
+
+# Checkpoints and model weights
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.state
+
+# Python caches and build artifacts
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+
+# Datasets should be provided by users locally
+datasets/

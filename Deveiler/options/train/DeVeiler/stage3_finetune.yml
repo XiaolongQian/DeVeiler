@@ -1,0 +1,166 @@
+# general settings
+name: 3_DeVeiler_finetune_stage
+
+model_type: ImageRestorationModel_WLPE_Reblur
+scale: 1
+num_gpu: 1
+manual_seed: 0
+
+# dataset and data loader settings
+datasets:
+  train:
+    name: Mixed_data
+    type: MixedPairedImageDataset_with_LPE_Map
+    # 混合训练：合成数据 + 真实世界数据
+    dataroot_gt: 
+      - /path/to/src_gt
+      - /path/to/clear_images  # optional real-world clean/GT images
+
+    dataroot_lq:
+      - /path/to/src_lq
+      - /path/to/veilgen_generate_images
+
+    # 文件夹概率：70%概率读取合成数据，30%概率读取真实数据
+
+    folder_probs: [0.05,0.95]
+
+    LPE_map_folder:
+      - null
+      - /path/to/individual_lpe_maps_folder
+
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
+
+    gt_size: 256
+    use_hflip: true
+    use_rot: true
+
+    # data loader
+    num_worker_per_gpu: 8
+    batch_size_per_gpu: 8
+    dataset_enlarge_ratio: 1
+    prefetch_mode: ~
+
+  val_1:
+    name: tgt_screen
+    type: MixedPairedImageDataset_with_LPE_Map
+    dataroot_gt: /path/to/tgt_gt
+    dataroot_lq: /path/to/tgt_lq
+
+    LPE_map_folder: /path/to/individual_lpe_maps_folder
+
+    io_backend:
+      type: disk
+
+
+# network structures
+network_g:
+  type: deveiler
+
+
+  in_channel: 3
+  gt_resolution: 256
+  norm_type: 'gn'
+  act_type: 'silu'
+  codebook_params:
+    - [32, 1024, 512]
+
+
+network_r:
+  type: DDN_frozen
+
+
+  in_channel: 3
+  gt_resolution: 256
+  norm_type: 'gn'
+  act_type: 'silu'
+  codebook_params:
+    - [32, 1024, 512]
+
+
+# path
+path:
+  pretrain_network_g: /path/to/checkpoints/stage1_pretrain_net_g.pth
+  strict_load_g: false 
+
+  pretrain_network_r: /path/to/checkpoints/stage2_reblur_net_g.pth
+  strict_load_r: false 
+
+# training settings
+train:
+  freeze_reblur: true
+
+  optim_g:
+    type: Adam
+    # lr: !!float 1e-4
+    lr: !!float 5e-5
+    weight_decay: 0
+    betas: [0.9, 0.99]
+
+
+  # scheduler:
+  #   type: MultiStepLR
+  #   milestones: [100000, 160000, 180000, 190000]
+  #   gamma: 0.5
+  scheduler:
+    type: TrueCosineAnnealingLR
+    T_max: 20000
+    eta_min: !!float 1e-7
+
+  total_iter: 20000
+  warmup_iter: -1  # no warm up
+
+  # total_iter: 200000
+  # warmup_iter: -1  # no warm up
+
+  # losses
+  pixel_opt:
+    type: L1Loss
+    loss_weight: 1.0 
+    reduction: mean
+
+  perceptual_opt:
+    type: LPIPSLoss
+    loss_weight: !!float 1.0    
+
+  reblur_opt:
+    type: L1Loss
+    loss_weight: 1.0 
+    reduction: mean
+
+
+# validation settings·
+val:
+  val_freq: !!float 1e3
+  save_img: true
+  # grids: true
+  # crop_size: 256
+  # max_minibatch: 8
+  pbar: true
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 10
+      test_y_channel: true
+
+    ssim: # metric name, can be arbitrary
+      type: calculate_ssim
+      crop_border: 10
+      test_y_channel: true
+
+    lpips: # metric name, can be arbitrary
+      type: calculate_lpips
+      crop_border: 10
+      test_y_channel: true
+
+
+
+# logging settings
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!float 1e3
+  use_tb_logger: true
+  wandb:
+    project: ~
+    resume_id: ~

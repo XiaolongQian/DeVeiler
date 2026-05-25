@@ -1,0 +1,124 @@
+# 增强LOTGMP训练配置文件 - 在ControlNet resblock中调制
+model:
+  cldm:
+    target: train_veilgen.ControlLDMWithLOTGMPEnhanced
+    params:
+      latent_scale_factor: 0.18215
+      unet_cfg:
+        use_checkpoint: True
+        image_size: 32 # unused
+        in_channels: 4
+        out_channels: 4
+        model_channels: 320
+        attention_resolutions: [ 4, 2, 1 ]
+        num_res_blocks: 2
+        channel_mult: [ 1, 2, 4, 4 ]
+        num_head_channels: 64 # need to fix for flash-attn
+        use_spatial_transformer: True
+        use_linear_in_transformer: True
+        transformer_depth: 1
+        context_dim: 1024
+        legacy: False
+      vae_cfg:
+        embed_dim: 4
+        ddconfig:
+          double_z: true
+          z_channels: 4
+          resolution: 256
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult:
+          - 1
+          - 2
+          - 4
+          - 4
+          num_res_blocks: 2
+          attn_resolutions: []
+          dropout: 0.0
+      clip_cfg:
+        embed_dim: 1024
+        vision_cfg:
+          image_size: 224
+          layers: 32
+          width: 1280
+          head_width: 80
+          patch_size: 14
+        text_cfg:
+          context_length: 77
+          vocab_size: 49408
+          width: 1024
+          heads: 16
+          layers: 24
+        layer: "penultimate"
+      controlnet_cfg:
+        use_checkpoint: True
+        image_size: 32 # unused
+        in_channels: 4   # x_noisy的通道数
+        hint_channels: 4  # 条件图像latent通道数，总输入通道数 = 4 + 4 = 8
+        model_channels: 320
+        attention_resolutions: [ 4, 2, 1 ]
+        num_res_blocks: 2
+        channel_mult: [ 1, 2, 4, 4 ]
+        num_head_channels: 64 # need to fix for flash-attn
+        use_spatial_transformer: True
+        use_linear_in_transformer: True
+        transformer_depth: 1
+        context_dim: 1024
+        legacy: False
+
+  # LOTGMP配置 - 需要确认正确的LOTGMP模型路径
+  lotgmp:
+    target: models.lotgmp.create_lotgmp  # 
+    params:
+      latent_channels: 4
+      hidden_channels: 128
+      num_res_blocks: 4
+      use_attention: True
+      shift_scale: 3
+
+  diffusion:
+    target: diffbir.model.gaussian_diffusion.Diffusion
+    params:
+      linear_start: 0.00085
+      linear_end: 0.0120
+      timesteps: 1000
+
+dataset:
+  train:
+    target: datasets.HybridAberrationTrainingData
+    params:
+      # 配对数据文件夹
+      lq_folder: /path/to/paired/lq_images
+      gt_folder: /path/to/paired/gt_images
+      
+      # 实拍数据文件夹
+      real_folder: /path/to/real/images
+      
+      # 概率设置
+      p: 0.70  # 实拍数据的概率
+      
+      # Meta info files (可选)
+      paired_meta_file: /path/to/meta/paired_train.txt
+      real_meta_file: /path/to/meta/real_train.txt
+      
+      # 其他参数
+      crop_size: 512
+      filename_tmpl: '{}'
+
+train:
+  # pretrained sd path
+  sd_path: '/path/to/pretrained/v2-1_512-ema-pruned.ckpt'
+  # experiment directory path
+  exp_dir: './outputs/train_veilgen'
+  learning_rate: 1e-5
+  batch_size: 16
+  num_workers: 16
+  train_steps: 10000
+  log_every: 50
+  ckpt_every: 1000
+  image_every: 100
+  resume: ~
+  # LOTGMP相关训练参数
+  lotgmp_learning_rate: 5e-5  # LOTGMP使用更高的学习率
+  lotgmp_loss_weight: 1.0  # LOTGMP损失权重
